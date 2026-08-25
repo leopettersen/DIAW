@@ -42,6 +42,14 @@ public class Controller {
     // ou, preferencialmente, através de um construtor.
     Service service = new Service();
 
+    @GetMapping("/")
+    public String home() {
+        return "Para consultar os dados do carro desejado, siga do seguinte caminho:\n" +
+                "1 - /marcas para consultar as marcas existentes para consulta.\n" +
+                "2 - /modelos/(número da marca desejada) para consultar os modelos da marca\n" +
+                "3 - /anos/(número da marca)/(número do modelo) para consultar os anos desse modelo\n" +
+                "4 - /valor/(número da marca)/(número do modelo)/(ano desejado) para consultar o  valor da fipe do modelo desajado no ano desejado.";
+    }
 
     // @GetMapping define um endpoint HTTP do tipo GET.
     //
