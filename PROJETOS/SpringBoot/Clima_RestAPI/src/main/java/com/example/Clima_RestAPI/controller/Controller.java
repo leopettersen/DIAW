@@ -12,7 +12,7 @@ public class Controller {
 
     @GetMapping("/clima") // https://localhost:8080/clima (BH é o padrão)
     public String consultarClima() {
-        return service.consultarClima("belo-horizonte");
+        return service.consultarClima("belo horizonte");
     }
 
     @GetMapping("/clima/{cidade}")
