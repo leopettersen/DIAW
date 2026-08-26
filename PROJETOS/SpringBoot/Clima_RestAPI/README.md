@@ -82,5 +82,6 @@ Data e horario da consulta: 25/08/2026 17:30:00
 src/main/java/com/example/Clima_RestAPI/
 ├── application/       # Classe principal (main)
 ├── controller/         # Controllers REST
+├── model/              # Classes utilizadas para tratamento de dados
 └── service/             # Lógica de negócio e integração com Open-Meteo
 ```
