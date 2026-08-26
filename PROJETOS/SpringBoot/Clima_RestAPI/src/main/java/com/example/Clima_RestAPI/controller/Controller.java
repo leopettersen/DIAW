@@ -15,7 +15,7 @@ public class Controller {
         return service.consultarClima("belo horizonte");
     }
 
-    @GetMapping("/clima/{cidade}")
+    @GetMapping("/clima/{cidade}") // http://localhost:8080/clima/belo%20horizonte (Cidade de Belo Horizonte)
     public String consultarClima(@PathVariable String cidade) {
         return service.consultarClima(cidade);
     }
