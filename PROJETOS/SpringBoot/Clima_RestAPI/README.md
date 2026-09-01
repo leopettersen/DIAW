@@ -68,12 +68,13 @@ GET http://localhost:8080/clima/Belo Horizonte
 **Exemplo de resposta:**
 ```
 ----Resumo do clima em Belo Horizonte-----
-Temperatura atual: 24.3°C
-Humidade relativa do ar: 58.0%
-Velocidade do vento: 12.4Km/h
-Temperatura máxima: 27.1°C
-Temperatura mínima: 18.5°C
-Data e horario da consulta: 25/08/2026 17:30:00
+Temperatura atual: 24.6°C
+Humidade relativa do ar: 48.0%
+Velocidade do vento: 1.6 Km/h
+Direção do vento: 117.0°
+Temperatura máxima: 29.2°C
+Temperatura mínima: 18.1°C
+Data e horario da consulta: 26/08/2026 09:23:21
 ```
 
 ## 📁 Estrutura do projeto
