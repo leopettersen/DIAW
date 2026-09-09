@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class LoginPucController {
+public class SecureLoginController {
 
     @GetMapping("/login")
     public String login() {
@@ -32,9 +32,6 @@ public class LoginPucController {
     public String register() {
         return "register";
     }
-
-    @GetMapping("/register")
-    public String register() { return "register"; }
 
     @PostMapping("/register")
     public String handleRegister(
