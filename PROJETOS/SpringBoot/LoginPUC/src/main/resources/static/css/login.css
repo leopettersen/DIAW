@@ -4,7 +4,18 @@
     box-sizing: border-box;
 }
 
-body, html {
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+body,
+html {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -17,27 +28,35 @@ body, html {
 .login-container {
     display: flex;
     width: 60vw;
-    height: auto;
+    /* 1. Mude de auto para uma altura fixa ou baseada na tela */
+    height: 60vh;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     overflow: hidden;
     background-color: #FCFEFF;
+    position: relative;
+    z-index: 1;
 }
 
 .login-image-logo-container {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-end;
+    /* 2. Ajuste a largura para somar 100% com o formulário (ex: 40% e 60%, ou 50% e 50%) */
     width: 50%;
+    height: 100%;
+    /* Garante que o container da imagem use toda a altura do pai */
     border-radius: 10px 0 0 10px;
     padding: 0;
+    /* object-fit não funciona em divs, apenas em img/video, pode remover daqui */
 }
 
 .login-image-logo-container img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    align-self: flex-start;
+    /* 3. Força a imagem a ocupar o bloco todo e cortar os excessos */
+    width: 75%;
+    height: 75%;
+    object-fit: scale-down;
+    align-self: center;
     border-radius: 0;
 }
 
@@ -46,6 +65,7 @@ body, html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* 4. Ajustado de 80% para 50% para fechar os 100% do container pai */
     width: 80%;
     padding: 2rem;
     border-radius: 0 10px 10px 0;
@@ -82,7 +102,14 @@ body, html {
     background-color: #81B1C3;
     color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+
+}
+
+.login-button-container button:hover {
+    background-color: #5d93a7;
+    transform: scale(1.03)
 }
 
 .login-redirect-options {
