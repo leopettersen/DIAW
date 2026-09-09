@@ -33,9 +33,6 @@ public class LoginPucController {
         return "register";
     }
 
-    @GetMapping("/register")
-    public String register() { return "register"; }
-
     @PostMapping("/register")
     public String handleRegister(
             @RequestParam("nome") String nome,
