@@ -24,17 +24,6 @@ public class UserService implements UserDetailsService {
         userRepository.save(usuario);
     }
 
-    private String gerarUsername(String email) {
-        String base = email.substring(0, email.indexOf("@"));
-        String username = base;
-        int contador = 1;
-        while (userRepository.existsByUsername(username)) {
-            username = base + contador;
-            contador++;
-        }
-        return username;
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = userRepository.findByUsername(username);
