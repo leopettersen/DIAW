@@ -24,6 +24,16 @@ public class UserService implements UserDetailsService {
         userRepository.save(usuario);
     }
 
+    public boolean resetPassword(String email, String novaSenha) {
+        Usuario usuario = userRepository.findByEmail(email);
+        if (usuario == null) {
+            return false;
+        }
+        usuario.setSenha(passwordEncoder.encode(novaSenha));
+        userRepository.save(usuario);
+        return true;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = userRepository.findByUsername(username);

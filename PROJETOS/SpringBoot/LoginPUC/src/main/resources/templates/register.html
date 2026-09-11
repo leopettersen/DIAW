@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Register Page</title>
     <link rel="stylesheet" th:href="@{/css/register.css}">
 
 </head>
@@ -24,8 +24,9 @@
                 <input type="text" id="endereco" name="endereco" placeholder="Endereco" required>
                 <input type="text" id="instituicao" name="instituicao" placeholder="Instituicao" required>
                 <input type="password" id="password" name="password" placeholder="Senha" required>
+                <p style="color: red; margin-bottom: 10px;" th:if="${erro}" th:text="${erro}"></p>
                 <div class="register-button-container">
-                    <button type="submit">Registar</button>
+                    <button type="submit">Registrar</button>
                 </div>
                 <p class="register-redirect-options">
                     Ja possui conta? <br>

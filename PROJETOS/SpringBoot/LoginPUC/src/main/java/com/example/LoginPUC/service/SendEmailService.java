@@ -19,7 +19,7 @@ public class SendEmailService {
             message.setTo(to);
             message.setSubject(subject);
             message.setText(body);
-            message.setFrom("leonardopettersen465@yahoo.com");
+            message.setFrom("leonardofedericipettersen@gmail.com");
 
             mailSender.send(message);
         } catch (MailException e) {

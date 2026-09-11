@@ -87,6 +87,13 @@ html {
     font-size: 1rem;
 }
 
+.login-form input[readonly] {
+    background-color: #f0f0f0;
+    color: #666;
+    cursor: not-allowed;
+    outline: none;
+}
+
 .login-button-container {
     width: 100%;
     display: flex;

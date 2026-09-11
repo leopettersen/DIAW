@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Recover Page</title>
+    <title>Login Page</title>
     <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 
@@ -17,12 +17,11 @@
         <form th:action="@{/recoverpassword}" method="post" class="login-form">
             <h4 class="login-title">E-mail de recuperação:</h4>
             <input type="email" id="email" name="email" placeholder="email" required>
-            <p style="color: red; margin-bottom: 10px;" th:if="${erro}" th:text="${erro}"></p>
             <div class="login-button-container">
                 <button type="submit">Recuperar senha</button>
             </div>
             <p class="login-redirect-options">
-                Lembrou sua senha? <a th:href="@{/login}" style="color: #FF743C; font-weight: bold; margin-left: 5px;">Faça login</a>
+                O E-mail informado não está cadastrado no nosso sistema! <a th:href="@{/login}" style="color: #FF743C; font-weight: bold; margin-left: 5px;">Faça login</a>
             </p>
         </form>
     </div>
