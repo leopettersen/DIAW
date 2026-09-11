@@ -56,10 +56,22 @@ public class LoginPucController {
 
         if (userRepository.existsByUsername(username) || userRepository.existsByEmail(email)) {
             redirectAttributes.addFlashAttribute("erro", "Nome de usuário ou e-mail já cadastrado.");
+            redirectAttributes.addAttribute("username", username);
+            redirectAttributes.addAttribute("email", email);
+            redirectAttributes.addAttribute("cpf", cpf);
+            redirectAttributes.addAttribute("rg", rg);
+            redirectAttributes.addAttribute("endereco", endereco);
+            redirectAttributes.addAttribute("instituicao", instituicao);
             return "redirect:/register";
         }
         if (password.length() < 3) {
             redirectAttributes.addFlashAttribute("erro", "A senha precisa ter pelo menos 3 caracteres.");
+            redirectAttributes.addAttribute("username", username);
+            redirectAttributes.addAttribute("email", email);
+            redirectAttributes.addAttribute("cpf", cpf);
+            redirectAttributes.addAttribute("rg", rg);
+            redirectAttributes.addAttribute("endereco", endereco);
+            redirectAttributes.addAttribute("instituicao", instituicao);
             return "redirect:/register";
         }
 
@@ -108,6 +120,7 @@ public class LoginPucController {
             sendEmailService.sendEmail(email, subject, body);
         } catch (SendEmailException e) {
             redirectAttributes.addFlashAttribute("erro", "Não foi possível enviar o e-mail agora. Tente novamente mais tarde.");
+            redirectAttributes.addAttribute("email", email);
             return "redirect:/recoverpassword";
         }
         return "redirect:/login"; // Após a recuperação de senha, redirecionar para a página de login

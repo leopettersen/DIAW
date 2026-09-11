@@ -37,4 +37,44 @@
     </div>
 </body>
 
+<script>
+    const parametrosDaUrl = new URLSearchParams(window.location.search);
+    const username = parametrosDaUrl.get('username');
+    const email = parametrosDaUrl.get('email');
+    const cpf = parametrosDaUrl.get('cpf');
+    const rg = parametrosDaUrl.get('rg');
+    const endereco = parametrosDaUrl.get('endereco');
+    const instituicao = parametrosDaUrl.get('instituicao');
+
+    if (username) {
+        const campoUsername = document.getElementById('username');
+        campoUsername.value = username;
+    }
+
+    if (email) {
+        const campoEmail = document.getElementById('email');
+        campoEmail.value = email;
+    }
+
+    if (cpf) {
+        const campoCpf = document.getElementById('cpf');
+        campoCpf.value = cpf;
+    }
+
+    if (rg) {
+        const campoRg = document.getElementById('rg');
+        campoRg.value = rg;
+    }
+
+    if (endereco) {
+        const campoEndereco = document.getElementById('endereco');
+        campoEndereco.value = endereco;
+    }
+
+    if (instituicao) {
+        const campoInstituicao = document.getElementById('instituicao');
+        campoInstituicao.value = instituicao;
+    }
+</script>
+
 </html>
