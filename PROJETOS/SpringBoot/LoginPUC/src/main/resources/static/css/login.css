@@ -40,21 +40,22 @@ html {
 
 .login-image-logo-container {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: center;
     /* 2. Ajuste a largura para somar 100% com o formulário (ex: 40% e 60%, ou 50% e 50%) */
     width: 50%;
     height: 100%;
     /* Garante que o container da imagem use toda a altura do pai */
     border-radius: 10px 0 0 10px;
     padding: 0;
+    background-color: #81B1C3;
     /* object-fit não funciona em divs, apenas em img/video, pode remover daqui */
 }
 
 .login-image-logo-container img {
     /* 3. Força a imagem a ocupar o bloco todo e cortar os excessos */
-    width: 75%;
-    height: 75%;
+    width: 50%;
+    height: 50%;
     object-fit: scale-down;
     align-self: center;
     border-radius: 0;

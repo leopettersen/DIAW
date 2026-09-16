@@ -1,30 +1,15 @@
 package com.example.LoginPUC.config;
 
-import com.example.LoginPUC.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-    @Autowired
-    private UserConfig userConfig;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -68,39 +53,4 @@ public class SecurityConfig {
                         .permitAll());
         return http.build();
     }
-
-    @Autowired
-    private UserService userService;
-
-    @Bean
-    public UserDetailsService inMemoryUserDetailsService() {
-        UserDetails user = User.builder()
-                .username(userConfig.getUserUsername())
-                .password(passwordEncoder.encode(userConfig.getUserPassword()))
-                .roles("USER")
-                .build();
-        UserDetails admin = User.builder()
-                .username(userConfig.getAdminUsername())
-                .password(passwordEncoder.encode(userConfig.getAdminPassword()))
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
-
-        authBuilder.userDetailsService(inMemoryUserDetailsService())
-                .passwordEncoder(passwordEncoder);
-
-        authBuilder.userDetailsService(userService)
-                .passwordEncoder(passwordEncoder);
-
-        return authBuilder.build();
-    }
-
-
 }
