@@ -121,7 +121,7 @@ Os valores acima criam os usuários em memória: `leo` (papel USER) e `admin` (p
 </dependency>
 ```
 
-> **Observação**: este projeto utiliza Spring Boot 4.x, em que os starters foram modularizados. Por isso, o starter de web é `spring-boot-starter-webmvc` (e não `spring-boot-starter-web`).
+> **Observação**: este projeto utiliza Spring Boot 4.1.1, em que os starters foram modularizados. Por isso, o starter de web é `spring-boot-starter-webmvc` (e não `spring-boot-starter-web`).
 
 # Thymeleaf
 
