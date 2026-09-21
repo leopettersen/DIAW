@@ -7,6 +7,13 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
+<aside>
+    <div class="nav">
+        <i th:href="@{/}" data-lucide="house"></i><a class="aNav" th:href="@{/}">Home</a></div>
+    <div class="nav">
+        <i th:href="@{/favorites}" data-lucide="heart"></i>
+        <a class="aNav" th:href="@{/favorites}">Favoritos</a></div>
+</aside>
 <div class="container">
     <h1>Estações de rádio em Belo Horizonte</h1>
     <table>
@@ -15,12 +22,6 @@
             <th>#</th>
             <th>Favicon</th>
             <th>Nome</th>
-            <th>URL</th>
-            <th>Tags</th>
-            <th>Votos</th>
-            <th>Cliques</th>
-            <th>Bitrate</th>
-            <th>Codec</th>
             <th>Player</th>
         </tr>
         </thead>
@@ -35,23 +36,49 @@
             <td class="break-word">
                 <a th:href="${station.homepage}" th:text="${station.name}"></a>
             </td>
-            <td class="break-word"><a th:href="${station.url}" th:text="${station.url}"></a></td>
-            <td class="break-word" th:text="${station.tags}"></td>
-            <td th:text="${station.votes}"></td>
-            <td th:text="${station.clickcount}"></td>
-            <td th:text="${station.bitrate}"></td>
-            <td th:text="${station.codec}"></td>
             <td>
                 <div class="audio-container">
-                    <audio controls>
-                        <source th:src="${station.url}" type="audio/mpeg">
-                        Seu navegador não suporta o elemento audio.
-                    </audio>
+                    <button class="play-btn" data-player-button>
+                        <i data-lucide="play"></i>
+                    </button>
+                    <audio data-player-audio th:src="${station.url}" preload="none"></audio>
                 </div>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+<script src="https://unpkg.com/lucide@1.47.0/dist/umd/lucide.min.js"></script>
+<script>
+    function setIcon(btn, name) {
+        const icon = btn.querySelector('[data-lucide]');
+        icon.setAttribute('data-lucide', name);
+        lucide.createIcons();
+    }
+    const current = {audio: null, btn: null};
+
+    document.querySelectorAll('[data-player-button]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const audio = btn.parentElement.querySelector('audio');
+
+            if (current.audio && current.audio !== audio) {
+                current.audio.pause();
+                setIcon(current.btn, 'play');
+            }
+
+            if (audio.paused) {
+                audio.play();
+                setIcon(btn, 'pause');
+                current.audio = audio;
+                current.btn = btn;
+            } else {
+                audio.pause();
+                setIcon(btn, 'play');
+                current.audio = current.btn = null;
+            }
+        })
+    })
+    lucide.createIcons();
+</script>
 </body>
 </html>
