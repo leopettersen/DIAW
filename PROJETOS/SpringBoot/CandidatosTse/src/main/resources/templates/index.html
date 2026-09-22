@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidatos - Eleições 2026 - MG</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<header>
+    <h1>Candidatos - Eleições 2026 - MG</h1>
+</header>
+<div class="filter">
+    <form method="get" th:action="@{/}" class="filtros">
+        <input type="text" id="texto" name="texto" th:value="${textoSelecionado}" placeholder="Ex: Ana, 1240...">
+        <select name="cargo">
+            <option value="" th:selected="${cargoSelecionado == ''}">Todos</option>
+            <option
+                    th:each="c : ${cargos}"
+                    th:value="${c}"
+                    th:text="${c}"
+                    th:selected="${c == cargoSelecionado}"></option>
+        </select>
+        <select name="partido">
+            <option value="" th:selected="${partidoSelecionado == ''}">Todos</option>
+            <option
+                    th:each="p : ${partidos}"
+                    th:value="${p}"
+                    th:text="${p}"
+                    th:selected="${p == cargoSelecionado}"></option>
+        </select>
+    </form>
+    <button type="submit">Filtrar</button>
+    <a th:href="@{/}" class="limpar">Limpar</a>
+</div>
+<p th:text="${cand}"></p>
+<div class="grad-candidatos">
+    <div class="card" th:each="cand : ${candidatos}">
+        <img th:src="@{'/images/candidatos/' + ${FMGcand.sqCandidato} + '_div.jpg'}"
+             th:alt="${cand.nomeUrna}" class="foto-candidato">
+        <h3 class="nome" th:text="${cand.nomeUrna}"></h3>
+        <p class="numero" th:text="'Número: ' + ${cand.nrCandidato}"></p>
+        <p class="cargo" th:text="${cand.cargo}"></p>
+        <p class="partido" th:text="${cand.siglaPartido} + ' - ' + ${cand.nomePartido}"></p>
+        <p class="situacao" th:if="${cand.situacaoCandidatura != null and !cand.situacaoCandidatura.isBlank()}" th:text="${cand.situacaoCandidatura}">Situação</p>
+        <p class="extra" th:if="${cand.idade > 0}">
+            <span th:text="${cand.idade} + 'anos'">idade</span>
+        </p>
+        <p class="extra" th:if="${cand.ocupacao != null and cand.ocupacao.isBlank()}" th:text="${cand.ocupacao}">Ocupação</p>
+        <p class="extra" th:if="${cand.escolaridade != null and cand.escolaridade.isBlank()}" th:text="${cand.escolaridade}">Escolaridade</p>
+    </div>
+</div>
+</body>
+</html>
