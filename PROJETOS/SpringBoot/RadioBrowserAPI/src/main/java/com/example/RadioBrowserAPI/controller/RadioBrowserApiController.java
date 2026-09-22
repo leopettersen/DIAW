@@ -21,4 +21,9 @@ public class RadioBrowserApiController {
         model.addAttribute("stations", radioStations);
         return "home";
     }
+
+    @GetMapping("/favorites")
+    public String favoritesPage() {
+        return "favorites";
+    }
 }

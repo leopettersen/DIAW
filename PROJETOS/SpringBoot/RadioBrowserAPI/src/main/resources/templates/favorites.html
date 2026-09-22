@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas rádios favoritas</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<aside>
+    <div class="nav" onClick="window.location.href='/'">
+        <i data-lucide="house"></i>
+        <a class="aNav">Home</a></div>
+    <div class="nav" onClick="window.location.href='/favorites'">
+        <i data-lucide="heart"></i>
+        <a class="aNav">Favoritos</a></div>
+</aside>
+<div class="container">
+    <h1>Minhas rádios favoritas</h1>
+    <p id="empty-message" class="empty-message" hidden>Você ainda não tem nenhuma rádio favorita.</p>
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Favicon</th>
+            <th>Nome</th>
+            <th>Favorito</th>
+            <th>Player</th>
+        </tr>
+        </thead>
+        <tbody id="favorites-body"></tbody>
+    </table>
+</div>
+<script src="https://unpkg.com/lucide@1.47.0/dist/umd/lucide.min.js"></script>
+<script th:src="@{/js/radio.js}"></script>
+<script>
+    const tbody = document.getElementById('favorites-body');
+    const emptyMessage = document.getElementById('empty-message');
+
+    function stationRow(fav, index) {
+        const tr = document.createElement('tr');
+        tr.dataset.stationId = fav.stationuuid;
+
+        const tdNum = document.createElement('td');
+        tdNum.textContent = index + 1;
+
+        const tdIcon = document.createElement('td');
+        const img = document.createElement('img');
+        img.className = 'favicon';
+        img.src = fav.favicon || 'imgs/radio.webp';
+        img.alt = 'Favicon';
+        tdIcon.appendChild(img);
+
+        const tdName = document.createElement('td');
+        tdName.className = 'break-word';
+        tdName.textContent = fav.name;
+
+        const tdFav = document.createElement('td');
+        const favBtn = document.createElement('button');
+        favBtn.className = 'favorite-btn is-favorite';
+        favBtn.setAttribute('data-favorite-button', '');
+        favBtn.innerHTML = '<i data-lucide="heart"></i>';
+        tdFav.appendChild(favBtn);
+
+        const tdPlayer = document.createElement('td');
+        const audioContainer = document.createElement('div');
+        audioContainer.className = 'audio-container';
+
+        const playBtn = document.createElement('button');
+        playBtn.className = 'play-btn';
+        playBtn.setAttribute('data-player-button', '');
+        playBtn.innerHTML = '<i data-lucide="play"></i>';
+
+        const audio = document.createElement('audio');
+        audio.setAttribute('data-player-audio', '');
+        audio.preload = 'none';
+        audio.src = fav.url;
+
+        audioContainer.appendChild(playBtn);
+        audioContainer.appendChild(audio);
+        tdPlayer.appendChild(audioContainer);
+
+        tr.appendChild(tdNum);
+        tr.appendChild(tdIcon);
+        tr.appendChild(tdName);
+        tr.appendChild(tdFav);
+        tr.appendChild(tdPlayer);
+        return tr;
+    }
+
+    async function loadFavorites() {
+        try {
+            const res = await fetch(`/api/favorites?clientId=${getClientId()}`);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const favorites = await res.json();
+            tbody.innerHTML = '';
+            emptyMessage.hidden = favorites.length > 0;
+            favorites.forEach((fav, i) => tbody.appendChild(stationRow(fav, i)));
+            lucide.createIcons();
+        } catch (err) {
+            console.error('Falha ao carregar favoritos:', err);
+        }
+    }
+
+    document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('[data-favorite-button]');
+        if (!btn) return;
+
+        const tr = btn.closest('tr');
+        try {
+            const res = await fetch(`/api/favorites?clientId=${getClientId()}&stationuuid=${encodeURIComponent(tr.dataset.stationId)}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            tr.remove();
+            if (tbody.children.length === 0) emptyMessage.hidden = false;
+        } catch (err) {
+            console.error('Falha ao remover favorito:', err);
+        }
+    });
+
+    loadFavorites();
+</script>
+</body>
+</html>

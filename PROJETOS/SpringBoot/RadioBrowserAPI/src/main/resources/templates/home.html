@@ -8,11 +8,12 @@
 </head>
 <body>
 <aside>
-    <div class="nav">
-        <i th:href="@{/}" data-lucide="house"></i><a class="aNav" th:href="@{/}">Home</a></div>
-    <div class="nav">
-        <i th:href="@{/favorites}" data-lucide="heart"></i>
-        <a class="aNav" th:href="@{/favorites}">Favoritos</a></div>
+    <div class="nav" onClick="window.location.href='/'">
+        <i data-lucide="house"></i>
+        <a class="aNav">Home</a></div>
+    <div class="nav" onClick="window.location.href='/favorites'">
+        <i data-lucide="heart"></i>
+        <a class="aNav">Favoritos</a></div>
 </aside>
 <div class="container">
     <h1>Estações de rádio em Belo Horizonte</h1>
@@ -22,11 +23,16 @@
             <th>#</th>
             <th>Favicon</th>
             <th>Nome</th>
+            <th>Favorito</th>
             <th>Player</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="station, iterStat : ${stations}">
+        <tr th:each="station, iterStat : ${stations}"
+            th:data-station-id="${station.stationuuid}"
+            th:data-name="${station.name}"
+            th:data-favicon="${station.favicon}"
+            th:data-url="${station.url}">
             <td th:text="${iterStat.index + 1}"></td>
             <td>
                 <img class="favicon"
@@ -35,6 +41,11 @@
             </td>
             <td class="break-word">
                 <a th:href="${station.homepage}" th:text="${station.name}"></a>
+            </td>
+            <td>
+                <button class="favorite-btn" data-favorite-button>
+                    <i data-lucide="heart"></i>
+                </button>
             </td>
             <td>
                 <div class="audio-container">
@@ -49,36 +60,66 @@
     </table>
 </div>
 <script src="https://unpkg.com/lucide@1.47.0/dist/umd/lucide.min.js"></script>
+<script th:src="@{/js/radio.js}"></script>
 <script>
-    function setIcon(btn, name) {
-        const icon = btn.querySelector('[data-lucide]');
-        icon.setAttribute('data-lucide', name);
-        lucide.createIcons();
+    const favSet = new Set();
+
+    async function loadFavorites() {
+        try {
+            const res = await fetch(`/api/favorites?clientId=${getClientId()}`);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const favorites = await res.json();
+            favorites.forEach(f => favSet.add(f.stationuuid));
+            document.querySelectorAll('[data-favorite-button]').forEach(btn => {
+                if (favSet.has(btn.closest('tr').dataset.stationId)) {
+                    btn.classList.add('is-favorite');
+                }
+            });
+        } catch (err) {
+            console.error('Falha ao carregar favoritos:', err);
+        }
     }
-    const current = {audio: null, btn: null};
 
-    document.querySelectorAll('[data-player-button]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const audio = btn.parentElement.querySelector('audio');
+    document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('[data-favorite-button]');
+        if (!btn) return;
 
-            if (current.audio && current.audio !== audio) {
-                current.audio.pause();
-                setIcon(current.btn, 'play');
-            }
+        const tr = btn.closest('tr');
+        const id = tr.dataset.stationId;
+        if (!id) return;
 
-            if (audio.paused) {
-                audio.play();
-                setIcon(btn, 'pause');
-                current.audio = audio;
-                current.btn = btn;
+        const isFav = favSet.has(id);
+        try {
+            let res;
+            if (isFav) {
+                res = await fetch(`/api/favorites?clientId=${getClientId()}&stationuuid=${encodeURIComponent(id)}`, { method: 'DELETE' });
             } else {
-                audio.pause();
-                setIcon(btn, 'play');
-                current.audio = current.btn = null;
+                res = await fetch('/api/favorites', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        clienteId: getClientId(),
+                        stationuuid: id,
+                        name: tr.dataset.name,
+                        favicon: tr.dataset.favicon,
+                        url: tr.dataset.url
+                    })
+                });
             }
-        })
-    })
-    lucide.createIcons();
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            if (isFav) {
+                favSet.delete(id);
+                btn.classList.remove('is-favorite');
+            } else {
+                favSet.add(id);
+                btn.classList.add('is-favorite');
+            }
+        } catch (err) {
+            console.error('Falha ao alterar favorito:', err);
+        }
+    });
+
+    loadFavorites();
 </script>
 </body>
 </html>
