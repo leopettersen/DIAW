@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
 import java.util.List;
-
 @Controller
 public class CandidatosTseController {
     private final CandidatosTseService candidatosTseService;
@@ -25,13 +24,16 @@ public class CandidatosTseController {
         Model model){
 
         candidatosTseService.carregarCsv();
-        List<Candidato> candidatos = candidatosTseService.listarTodos();
+        List<Candidato> candidatos = candidatosTseService.filtrar(cargo, partido, texto);
         List<String> partidos = candidatosTseService.listarPartidos();
         List<String> cargos = candidatosTseService.listarCargos();
 
         model.addAttribute("candidatos", candidatos);
-        model.addAttribute("partido", partidos);
+        model.addAttribute("partidos", partidos);
         model.addAttribute("cargos", cargos);
+        model.addAttribute("cargoSelecionado", cargo);
+        model.addAttribute("partidoSelecionado", partido);
+        model.addAttribute("textoSelecionado", texto);
 
         return "index";
     }

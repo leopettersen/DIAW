@@ -1,19 +1,117 @@
 * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
+body {
+    background-color: #f2f4f7;
 }
 
 header {
-    background-color: blue;
+    background-color: #1a3a6e;
+    padding: 24px 40px;
+}
+
+header h1 {
+    color: #fff;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 40px;
+}
+
+.filter {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    margin-bottom: 24px;
+}
+
+.filtros input,
+.filtros select,
+.filtros button,
+.filtros a.limpar {
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 6px;
+    font-family: inherit;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+.filtros select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%23666'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+.filtros input,
+.filtros select {
+    border: 1px solid #ccc;
+}
+
+.filtros button {
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #1a3a6e;
+    color: #fff;
+    font-weight: bold;
+}
+
+.filtros a.limpar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #ccc;
+}
+
+.filtros a.limpar:hover {
+    background-color: #f2f4f7;
 }
 
 .grade-candidatos {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+    padding: 0 0 14px;
 }
 
 .foto-candidato {
     width: 100%;
     aspect-ratio: 161 / 225;
     object-fit: cover;
+    margin-bottom: 12px;
+}
+
+.card .nome {
+    color: #1a3a6e;
+    font-size: 16px;
+    margin: 0 14px 4px;
+}
+
+.card p {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.4;
+    margin: 0 14px;
 }
