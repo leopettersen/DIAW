@@ -1,0 +1,105 @@
+.lista-treinadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.treinador-card {
+  background: var(--superficie);
+  border-top: 4px solid var(--destaque);
+  box-shadow: 0 2px 8px var(--sombra);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.treinador-card h2 {
+  margin-bottom: 4px;
+}
+
+.insignias {
+  color: #f4a261;
+  margin-bottom: 12px;
+}
+
+.equipe {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.equipe button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--superficie-2);
+  color: var(--texto);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 4px 10px 4px 4px;
+}
+
+.equipe button:hover {
+  border-color: var(--destaque);
+}
+
+.equipe img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+/* Janelinha do treinador: fundo de "visor" com a cor da carcaça */
+.trainer-avatar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 70%, rgb(255 255 255 / 0.55), transparent 65%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, #888 18%, var(--superficie)),
+      var(--superficie-2)
+    );
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, #888 45%, var(--borda));
+}
+
+.trainer-avatar--lg {
+  width: 84px;
+  height: 84px;
+  border-radius: 16px;
+}
+
+.trainer-avatar--sm {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.trainer-avatar__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.12) translateY(4%);
+}
+
+.trainer-avatar--sm .trainer-avatar__img {
+  transform: scale(1.9) translateY(18%);
+}
+
+.trainer-avatar__monogram {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, #aaa, #888 60%, #666);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.trainer-avatar--sm .trainer-avatar__monogram {
+  font-size: 0.7rem;
+}
