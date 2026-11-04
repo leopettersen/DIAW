@@ -1,7 +1,11 @@
-import ParticipanteCard from '../components/ParticipanteCard';
-import { listarNaRoca, listarForaDaRoca, registrarVoto } from '../services/votacaoService' ;
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ParticipanteCard from '../components/ParticipanteCard';
+import {
+  listarNaRoca,
+  listarForaDaRoca,
+  registrarVoto,
+} from '../services/votacaoService';
 
 export default function Votacao() {
   const [ultimoVoto, setUltimoVoto] = useState(null);
@@ -17,35 +21,42 @@ export default function Votacao() {
   }
 
   return (
-    <div className="container">
-      <h1>Quem você quer eliminar?</h1>
-      <p>Cada clique conta um voto para tirar o peão da fazenda.</p>
+    <main className="container pagina-votacao">
+      <header className="pagina-intro">
+        <h1>Quem você quer eliminar?</h1>
+        <p>Cada clique conta um voto para tirar o peão da fazenda.</p>
+      </header>
+
       {ultimoVoto && (
-        <div className="confirmacao-voto" role="status">
-            <p>
-              Voto registrado para eliminar <strong>{ultimoVoto.nome}</strong>. Você já votou {votosNaSessao} {votosNaSessao === 1 ? 'vez' : 'vezes'}.
-            </p>
-            <Link to="/resultado"><strong>Ver resultado</strong></Link>
+        <div className="confirmacao-voto" role="status" aria-live="polite">
+          <p>
+            Voto registrado para eliminar <strong>{ultimoVoto.nome}</strong>. Você já votou{' '}
+            {votosNaSessao} {votosNaSessao === 1 ? 'vez' : 'vezes'}.
+          </p>
+          <Link to="/resultado">Ver resultado</Link>
         </div>
       )}
-      <div className="grade-roca">
-        {roca.map((p) => (
+
+      <section className="grade-roca" aria-label="Participantes na roça">
+        {roca.map((participante) => (
           <ParticipanteCard
-            key={p.id}
-            participante={p}
+            key={participante.id}
+            participante={participante}
             onVotar={handleVotar}
           />
         ))}
-      </div>
-      <div className="demais-peoes">
-        <h2>Demais peões</h2>
+      </section>
+
+      <section className="demais-peoes" aria-labelledby="titulo-demais-peoes">
+        <h2 id="titulo-demais-peoes">Demais peões</h2>
         <p>Fora da roça essa semana, não podem receber votos.</p>
-      </div>
-      <div className="grade-demais-peoes">
-            {foraDaRoca.map((p) => (
-              <ParticipanteCard key={p.id} participante={p} />
-            ))}
-      </div>
-    </div>
-  )
+      </section>
+
+      <section className="grade-demais-peoes" aria-label="Demais participantes">
+        {foraDaRoca.map((participante) => (
+          <ParticipanteCard key={participante.id} participante={participante} />
+        ))}
+      </section>
+    </main>
+  );
 }

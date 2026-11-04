@@ -1,131 +1,412 @@
-.container {
-  width: min(1120px, 100%);
-  margin: 0 auto;
-  padding: clamp(1rem, 3vw, 3rem) 1rem 3rem;
-}
-
-.participante-card {
-  color: var(--tinta);
-  background: var(--papel);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.participante-detalhes {
-  padding: 1rem;
+/* Layout compartilhado pelas páginas de votação e resultado. */
+.app-shell {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: .5rem;
 }
 
-.card-roca {
-  border: 4px solid var(--celeiro);
+.container {
+  width: min(1080px, 100%);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 3vw, 2.5rem) 1.25rem 3rem;
 }
 
-.selo-roca {
-  position: absolute;
-  top: .5rem;
-  right: .5rem;
-  background: var(--celeiro);
-  color: white;
-  border-radius: 999999999px;
-  padding: .35rem .6rem;
-  font-weight: 800;
-  text-transform: uppercase;
+.container > .pagina-intro {
+  margin-bottom: 1.25rem;
 }
 
+.pagina-intro h1,
+.resultado-parcial h1 {
+  color: var(--palha);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin-bottom: 0.2rem;
+}
+
+.pagina-intro p {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+/* ---------- Votação ---------- */
 .confirmacao-voto {
-  color: white;
+  color: #fff;
   background: var(--pasto);
   border-radius: 8px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
+  padding: 0.85rem 1.15rem;
+  margin: 0 0 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+}
+
+.confirmacao-voto p {
+  margin: 0;
+}
+
+.confirmacao-voto a {
+  flex: 0 0 auto;
+  font-weight: 800;
 }
 
 .grade-roca {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
 }
 
-.demais-peoes {
-  margin-top: 3rem;
+.participante-card {
+  min-width: 0;
+  color: var(--tinta);
+  background: var(--papel);
+  border-radius: 9px;
+  overflow: hidden;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
 }
 
-.grade-demais-peoes {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 1.5rem;
+/* Cartazes maiores dos três participantes que estão na roça. */
+.participante-card.card-roca {
+  position: relative;
+  padding: 0.65rem;
+  border: 4px solid var(--papel);
+  box-shadow:
+    inset 0 0 0 4px var(--celeiro),
+    0 7px 15px rgba(0, 0, 0, 0.3);
 }
 
 .participante-img {
   position: relative;
+  overflow: visible;
   background: var(--madeira);
 }
 
 .participante-img img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
+  border-radius: 2px;
+}
+
+.card-roca .participante-img {
+  margin: 0.15rem 0.15rem 0;
+}
+
+.selo-roca {
+  position: absolute;
+  z-index: 1;
+  top: 0.05rem;
+  right: -0.65rem;
+  padding: 0.35rem 0.8rem;
+  color: #fff;
+  background: var(--celeiro);
+  border-radius: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-family: var(--fonte-titulo);
+  font-size: 0.9rem;
+  transform: rotate(5deg);
+  white-space: nowrap;
+}
+
+.participante-detalhes {
+  padding: 0.65rem 0.25rem 0.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.65rem;
+}
+
+.participante-detalhes h3 {
+  color: var(--tinta);
+  text-align: center;
+  font-size: 1.15rem;
+}
+
+.card-roca .participante-detalhes {
+  padding: 0.55rem 0.2rem 0.15rem;
+}
+
+.card-roca .participante-detalhes h3 {
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+}
+
+.card-roca .botao {
+  width: 100%;
+  text-align: center;
+  padding: 0.68rem 0.75rem;
+  font-size: 0.95rem;
+}
+
+.demais-peoes {
+  margin-top: 2.1rem;
+  margin-bottom: 0.85rem;
+}
+
+.demais-peoes h2 {
+  color: var(--palha);
+  font-size: 1.45rem;
+  margin-bottom: 0.15rem;
+}
+
+.demais-peoes p {
+  margin: 0;
+  color: rgba(244, 230, 196, 0.82);
+}
+
+.grade-demais-peoes {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.grade-demais-peoes .participante-card {
+  padding: 0.4rem;
+  border-radius: 6px;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+.grade-demais-peoes .participante-img img {
   aspect-ratio: 16 / 9;
 }
 
+.grade-demais-peoes .participante-detalhes {
+  padding: 0.35rem 0.1rem 0.15rem;
+  gap: 0;
+}
+
+.grade-demais-peoes .participante-detalhes h3 {
+  font-family: var(--fonte-texto);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+/* ---------- Resultado ---------- */
+.pagina-resultado {
+  flex: 1;
+}
+
+.resultado-parcial {
+  margin-bottom: 1.8rem;
+}
+
+.resultado-parcial h1 {
+  margin-bottom: 0.15rem;
+}
+
+.resultado-parcial p {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.resultado-parcial p strong {
+  color: var(--palha);
+  font-family: var(--fonte-titulo);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.resultado-vazio {
+  min-height: 152px;
+  padding: 2rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  color: var(--tinta);
+  text-align: center;
+  background: var(--papel);
+  border-radius: 9px;
+}
+
+.resultado-vazio p {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.resultado-vazio .botao {
+  min-width: 172px;
+  text-align: center;
+}
+
 .ranking-resultado {
-  display: grid; 
-  gap: 3rem;
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .participante-resultado {
-  color: var(--tinta); 
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  align-items: center;
+  gap: 1.2rem;
+  min-width: 0;
+  padding: 0.75rem;
+  color: var(--tinta);
   background: var(--papel);
-  padding: 0.5rem;
+  border: 4px solid transparent;
   border-radius: 10px;
 }
 
+.participante-resultado.sairia-hoje {
+  border-color: var(--celeiro);
+}
+
 .participante-resultado-fotoNome {
-  display: flex;
-  align-items: center;
+  min-width: 0;
 }
 
-.participante-resultado img {
-  width: 200px; 
-  height: 200px; 
-  margin-right: 2rem;
+.participante-resultado-fotoNome img {
+  display: block;
+  width: 160px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 3px;
 }
 
-.barra {
-  height: 1rem;
-  overflow: hidden;
-  border-radius: 999px; 
-  background: white; 
-}
-
-.barra-preenchida { 
-  height: 100%; 
-  background: var(--celeiro); 
-  border-radius: 999px;
-}
-
-.selo-sairia-hoje {
-  color: #fff; 
-  background: var(--celeiro); 
-  padding: .8rem, 1.2rem; 
-  border-radius: 999999999px;
-  width: fit-content;
-  font-weight: 800;
-  height: fit-content;
-  margin-left: 1rem;
+.participante-resultado-conteudo {
+  min-width: 0;
 }
 
 .participante-resultado-nome {
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 0.6rem;
 }
 
-.participante-resultado-votos {;
-  align-items: center;
-  gap: .5rem;
+.participante-resultado-nome h2 {
+  color: var(--tinta);
+  font-size: 1.35rem;
+}
+
+.selo-sairia-hoje {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  color: #fff;
+  background: var(--celeiro);
+  border-radius: 4px;
+  font-size: 0.82rem;
   font-weight: 800;
+  line-height: 1.3;
+}
+
+.barra {
+  width: 100%;
+  height: 1.35rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #d8c9a7;
+}
+
+.barra-preenchida {
+  height: 100%;
+  min-width: 0;
+  background: var(--madeira);
+  border-radius: inherit;
+  transition: width 0.25s ease;
+}
+
+.sairia-hoje .barra-preenchida {
+  background: var(--celeiro);
+}
+
+.participante-resultado-votos {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+/* ---------- Rodapé e adaptação ---------- */
+.rodape {
+  margin-top: auto;
+}
+
+@media (max-width: 900px) {
+  .grade-demais-peoes {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .participante-resultado {
+    grid-template-columns: 140px minmax(0, 1fr);
+  }
+
+  .participante-resultado-fotoNome img {
+    width: 140px;
+    height: 82px;
+  }
+}
+
+@media (max-width: 680px) {
+  .container {
+    padding: 1.5rem 1rem 2.5rem;
+  }
+
+  .grade-roca {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grade-demais-peoes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .confirmacao-voto {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .participante-resultado {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 0.8rem;
+    padding: 0.55rem;
+  }
+
+  .participante-resultado-fotoNome img {
+    width: 112px;
+    height: 74px;
+  }
+
+  .participante-resultado-nome h2 {
+    font-size: 1.05rem;
+  }
+
+  .participante-resultado-nome {
+    gap: 0.35rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .barra {
+    height: 1rem;
+  }
+
+  .participante-resultado-votos {
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 440px) {
+  .grade-roca {
+    grid-template-columns: 1fr;
+  }
+
+  .grade-demais-peoes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .participante-resultado {
+    grid-template-columns: 1fr;
+  }
+
+  .participante-resultado-fotoNome img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
 }
